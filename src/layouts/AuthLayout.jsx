@@ -1,6 +1,4 @@
-// import { Outlet } from "react-router-dom";
-
-import Login from "./Outlet/login";
+import { Outlet } from "react-router-dom";
 
 function AuthLayout() {
   return (
@@ -9,9 +7,8 @@ function AuthLayout() {
         <h1>GymApp</h1>
         <p>Entrená · Mejorá · Superate</p>
       </header>
-
       <main className="auth-main">
-        <Login/>
+        <Outlet />
       </main>
     </div>
   );
