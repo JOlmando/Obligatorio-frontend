@@ -1,5 +1,3 @@
-
-
 const Bienvenida = () => {
   return (
     <div>

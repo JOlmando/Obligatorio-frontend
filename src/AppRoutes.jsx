@@ -1,7 +1,11 @@
 import { Routes, Route } from "react-router-dom";
+
 import AuthLayout from "./layouts/AuthLayout";
-import LoginPage from "./pages/loginPage";
-import RegisterPage from "./pages/registerPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
+import VisitasLayout from "./layouts/VisitasLayout";
+import CheckinPage from "./pages/CheckinPage";
 
 function AppRoutes() {
   return (
@@ -11,6 +15,11 @@ function AppRoutes() {
         <Route path="/registro" element={<RegisterPage />} />
       </Route>
 
+      <Route element={<VisitasLayout />}>
+        <Route path="/checkinPage" element={<CheckinPage />} />
+      </Route>
+
+      <Route path="/B" element={<Bienvenida  />} />
     </Routes>
   );
 }
