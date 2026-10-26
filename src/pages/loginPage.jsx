@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form"
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const Login = () => {
 
@@ -20,8 +20,8 @@ const Login = () => {
           <label htmlFor="password">Contraseña</label>
           <input type="password" id="password" {...register("password")} required/>
 
-          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></input>
-          <label for="vehicle1"> Recordarme</label><br></br>
+          <input type="checkbox" id="remember" name="remember" value="remember"></input>
+          <label htmlFor="remember"> Recordarme</label><br></br>
 
 
           <input type="submit" value="Iniciar sesión" disabled/>

@@ -1,12 +1,15 @@
-
 import './App.css'
 import AppRoutes from "./AppRoutes";
+import { BrowserRouter } from "react-router";
+
 
 const App = () => {
 
   return (
     <>
-      <AppRoutes />
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
     </>
   )
 }
