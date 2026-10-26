@@ -16,10 +16,8 @@ function AppRoutes() {
       </Route>
 
       <Route element={<VisitasLayout />}>
-        <Route path="/checkinPage" element={<CheckinPage />} />
+        <Route path="/checkin" element={<CheckinPage />} />
       </Route>
-
-      <Route path="/B" element={<Bienvenida  />} />
     </Routes>
   );
 }

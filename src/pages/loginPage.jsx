@@ -14,11 +14,15 @@ const Login = () => {
         <h2>Iniciar sesión</h2>
         <p>Ingresá a tu cuenta para continuar</p>
       <form onSubmit={handleSubmit(procesarDatos)}>
-          <label htmlFor="username">Ingrese username:</label>
+          <label htmlFor="username">Usuario</label>
           <input type="text" id="username" {...register("username")} required/>
 
-          <label htmlFor="password">Ingrese password:</label>
+          <label htmlFor="password">Contraseña</label>
           <input type="password" id="password" {...register("password")} required/>
+
+          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></input>
+          <label for="vehicle1"> Recordarme</label><br></br>
+
 
           <input type="submit" value="Iniciar sesión" disabled/>
       </form>

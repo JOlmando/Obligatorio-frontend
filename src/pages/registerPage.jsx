@@ -1,4 +1,5 @@
 import {useForm} from "react-hook-form"
+import { Link } from "react-router-dom";
 
 const Register = () => {
 
@@ -25,6 +26,10 @@ const Register = () => {
 
         <label htmlFor="subir-img">Elige una foto de perfil:</label>
         <input type="file" id="subir-img" name="imagen" accept="image/*" {...register("subir-img")}></input>
+
+        <p>
+          ¿Ya tenés una cuenta? <Link to="/login">Iniciar sesión</Link>
+        </p>
         
         <input type="submit" value="Registrarse"  />
       </form>
