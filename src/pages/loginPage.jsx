@@ -13,7 +13,13 @@ const Login = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({resolver: joiResolver(loginSchema), mode: 'onChange'})
   
     const procesarDatos = (data) => {
-        console.log(data);
+        localStorage.setItem('usuario', data.username)
+        console.log(data)
+        toast("Bienvenida/o!");
+        toast.success("Inicio de sesión exitoso!");
+        toast.warning("Por favor espera...");
+        toast.error("Error al iniciar sesión");
+        navigate('/checkin')
     }
 
   return (
@@ -22,15 +28,17 @@ const Login = () => {
       <h2>Iniciar sesión</h2>
       <p>Ingresá a tu cuenta para continuar</p>
       <form onSubmit={handleSubmit(procesarDatos)}>
-          <label htmlFor="username">Usuario</label>
-          <input type="text" id="username" {...register("username")} required/>
+          <div className="form-group">
+                <label htmlFor={usernameId}>Usuario:</label>
+                <input type="text" id={usernameId} {...register('username')} />
+                {errors.username && <span className="error">{errors.username.message}</span>}
+          </div>
 
-          <label htmlFor="password">Contraseña</label>
-          <input type="password" id="password" {...register("password")} required/>
-
-          <input type="checkbox" id="remember" name="remember" value="remember"></input>
-          <label htmlFor="remember"> Recordarme</label><br></br>
-
+          <div className="form-group">
+                <label htmlFor={passwordId}>Contraseña:</label>
+                <input type="password" id={passwordId} {...register('password')} />
+                {errors.password && <span className="error">{errors.password.message}</span>}
+          </div>
 
           <input type="submit" value="Iniciar sesión" disabled/>
       </form>

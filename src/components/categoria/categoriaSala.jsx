@@ -5,6 +5,7 @@ const CategoriaSala = ({categoria}) => {
         console.log(data);
   }
 
+  // convertir esto en un card
   return (
     <form onSubmit={handleSubmit(procesarDatos)}>
             <label htmlFor="nameCat">{categoria.nombre}</label>
