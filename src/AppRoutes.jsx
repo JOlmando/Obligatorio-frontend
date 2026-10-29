@@ -15,16 +15,22 @@ import NotFoundPage from "./pages/NotFoundPage";
 function AppRoutes() {
   return (
     <Routes>
-        <Route element={<ContainerLayout.jsx />}>
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registro" element={<RegisterPage />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
+
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/registro" element={<RegisterPage />} />
+      </Route>
+{/* 
+      <Route element={<ProtectedRoute />}> */}
+        <Route element={<ContainerLayout/>}>
+
           <Route path="/checkin" element={<CheckinPage />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-        </Route>
+          
+        {/* </Route> */}
+      </Route>
+
+      <Route path="*" element={<NotFoundPage />} />
+
     </Routes>
   );
 }

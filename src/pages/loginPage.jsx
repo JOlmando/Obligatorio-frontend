@@ -1,9 +1,17 @@
-import {useForm} from "react-hook-form"
-import { Link } from "react-router";
+import { useId } from 'react'
+import { Link, useNavigate } from 'react-router'
+import { useForm } from 'react-hook-form'
+import { joiResolver } from '@hookform/resolvers/joi'
+import { loginSchema } from '../../validators/auth.validators'
+import { toast } from 'react-toastify'
 
 const Login = () => {
 
-    const {register, handleSubmit} = useForm();
+    const navigate = useNavigate()
+    const usernameId = useId()
+    const passwordId = useId()
+    const { handleSubmit, register, formState: { errors } } = useForm({resolver: joiResolver(loginSchema), mode: 'onChange'})
+  
     const procesarDatos = (data) => {
         console.log(data);
     }
@@ -11,8 +19,8 @@ const Login = () => {
   return (
     <>
     <section className="auth-form">
-        <h2>Iniciar sesión</h2>
-        <p>Ingresá a tu cuenta para continuar</p>
+      <h2>Iniciar sesión</h2>
+      <p>Ingresá a tu cuenta para continuar</p>
       <form onSubmit={handleSubmit(procesarDatos)}>
           <label htmlFor="username">Usuario</label>
           <input type="text" id="username" {...register("username")} required/>

@@ -1,5 +1,10 @@
 const CategoriaSala = ({categoria}) => {
-//{categoria.nombre} {categoria.horarios}
+
+  const {register, handleSubmit} = useForm();
+      const procesarDatos = (data) => {
+        console.log(data);
+  }
+
   return (
     <form onSubmit={handleSubmit(procesarDatos)}>
             <label htmlFor="nameCat">{categoria.nombre}</label>
