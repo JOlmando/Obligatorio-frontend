@@ -10,11 +10,11 @@ function ContainerLayout() {
             </main>
             <footer className="container-footer">
                 <nav className="container-nav">
-                    <navlink to="/">Inicio</navlink>
-                    <navlink to="/">Visitas</navlink>
-                    <navlink to="/">Entrenamiento</navlink>
-                    <navlink to="/">Nutricion</navlink>
-                    <navlink to="/">Perfil</navlink>
+                    <Navlink to="/">Inicio</Navlink>
+                    <Navlink to="/">Visitas</Navlink>
+                    <Navlink to="/">Entrenamiento</Navlink>
+                    <Navlink to="/">Nutricion</Navlink>
+                    <Navlink to="/">Perfil</Navlink>
                 </nav>
             </footer>
         </div>

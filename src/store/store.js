@@ -1,17 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'
+
+import forecastReducer from '../features/forecast/forecast.slice'
 
 
-//El configureStore recibe un objeto de configuración donde se define el reducer principal y otras opciones del store.
+const store = configureStore({
+  reducer: {
+    // Agrega tus reducers aquí
+    forecast: forecastReducer
+  }
+})
 
-//UN REDUCER ES UNA FUNCION QUE RECIBE EL ESTADO ACTUAL Y UNA ACCION, Y DEVUELVE EL NUEVO ESTADO.
-const placeholderSlice = createSlice({
-    name: 'placeholder',
-    initialState: {},
-    reducers: {}
-});
-
-export const store = configureStore({
-    reducer: {
-        placeholder: placeholderSlice.reducer
-    }
-});
+export default store

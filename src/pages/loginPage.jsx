@@ -40,7 +40,7 @@ const Login = () => {
                 {errors.password && <span className="error">{errors.password.message}</span>}
           </div>
 
-          <input type="submit" value="Iniciar sesión" disabled/>
+          <input type="submit" value="Iniciar sesión" />
       </form>
       <p>
         ¿No tenés una cuenta? <Link to="/registro">Registrate</Link>
