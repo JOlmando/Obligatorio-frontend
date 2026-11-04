@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
-import api from "../api/api";
+import api from "../../api/api";
 import Categoria from "./Categoria";
 
 const ListaCategorias = () => {
+
+  const [loading, setLoading] = useState(true);
+
   const [categorias, setCategorias] = useState([]);
+
 
     useEffect(() => {
       api.get("?results=10")
@@ -14,15 +18,10 @@ const ListaCategorias = () => {
             
     }, []);
   return (
-    <div>
-        <h1>Categorias</h1>
-        
-            {categorias.map((categoria) => (
-                <Categoria key={categoria._id} categoria={categoria} />
-            ))}
-        
+    <div className="lista-categorias">
+        {loading ? <p>Cargando categorías...</p> : (categorias.length > 0 ? categorias.map((c) => (<Categoria key={c._id} {...c} />)) : <p>No hay categorías disponibles.</p>)} 
     </div>
   )
-}
+  }
 
-export default ListaCategorias
+  export default ListaCategorias

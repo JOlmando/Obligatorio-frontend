@@ -1,21 +1,19 @@
 const CategoriaSala = ({categoria}) => {
 
-  const {register, handleSubmit} = useForm();
-      const procesarDatos = (data) => {
-        console.log(data);
+  const reservarCategoria = () => {
+        console.log("A");
   }
 
-  // convertir esto en un card
   return (
-    <form onSubmit={handleSubmit(procesarDatos)}>
-            <label htmlFor="nameCat">{categoria.nombre}</label>
-            <input type="text" id="nameCat" {...register("nameCat")} required/>
+    <form>
+          <label htmlFor="nameCat">{categoria.nombre}</label>
+          <input type="text" id="nameCat"  required/>
 
-            <label htmlFor="hrCat">{categoria.horarios}</label>
-            <input type="text" id="hrCat" {...register("hrCat")} required/>
+          <label htmlFor="hrCat">{categoria.horarios}</label>
+          <input type="text" id="hrCat" required/>
 
-          <input type="submit" value="Check-in"/>
-      </form>
+          <input type="button" defaultValue="Check-in >" onClick ={reservarCategoria}/>
+    </form>
   )
 }
 

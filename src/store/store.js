@@ -1,13 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import forecastReducer from '../features/forecast/forecast.slice'
+import loginReducer from '../features/login.slice'
 
-
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    // Agrega tus reducers aquí
-    forecast: forecastReducer
+    login: loginReducer
   }
 })
 
-export default store
