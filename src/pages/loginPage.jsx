@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { Link, /*useNavigate*/ } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { loginSchema } from '../../validators/auth.validators'
@@ -11,37 +11,25 @@ import { guardarToken } from '../features/login.slice';
 const Login = () => {
 
     const dispatch = useDispatch();
-    //const navigate = useNavigate()
+    const navigate = useNavigate()
     const usernameId = useId();
     const passwordId = useId();
     const { handleSubmit, register, formState: { errors } } = useForm({resolver: joiResolver(loginSchema), mode: 'onChange'});
     const [errorLogin, setErrorLogin] = useState('');
+    const token = useSelector((state) => state.login.token);
 
     const iniciarSesion = async (data) => {
         try{
           const res = await api.post('/v1/auth/login', data)
 
           dispatch(guardarToken(res.data.token));
-
-          //console.log(res.data);
-          
-          const token = useSelector((state) => state.login.token);
-
-          console.log(token);
-
+          toast.success("Inicio de sesión exitoso!");
+          toast("Bienvenida/o!");
+          navigate('/checkin')
 
         }catch(error){
           setErrorLogin(error.response?.data?.message || 'Ocurrió un error al iniciar sesión');
-        }
-
-        
-        toast("Bienvenida/o!");
-        toast.success("Inicio de sesión exitoso!");
-        toast.warning("Por favor espera...");
-
-        
-        
-        //navigate('/checkin')
+        } 
     }
 
   return (
@@ -52,13 +40,13 @@ const Login = () => {
       <form onSubmit={handleSubmit(iniciarSesion)}>
           <div className="form-group">
                 <label htmlFor={usernameId}>Usuario:</label>
-                <input type="text" id={usernameId} {...register('username')} />
+                <input type="text" id={usernameId} {...register('username')} required/>
                 {errors.username && <span className="error">{errors.username.message}</span>}
           </div>
 
           <div className="form-group">
                 <label htmlFor={passwordId}>Contraseña:</label>
-                <input type="password" id={passwordId} {...register('password')} />
+                <input type="password" id={passwordId} {...register('password')} required/>
                 {errors.password && <span className="error">{errors.password.message}</span>}
           </div>
           <input type="submit" value="Iniciar sesión" />

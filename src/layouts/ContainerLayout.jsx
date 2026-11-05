@@ -10,11 +10,11 @@ function ContainerLayout() {
             </main>
             <footer className="container-footer">
                 <nav className="container-nav">
-                    <Navlink to="/">Inicio</Navlink>
+                    {/*<Navlink to="/checkin">Inicio</Navlink>
                     <Navlink to="/">Visitas</Navlink>
                     <Navlink to="/">Entrenamiento</Navlink>
                     <Navlink to="/">Nutricion</Navlink>
-                    <Navlink to="/">Perfil</Navlink>
+                    <Navlink to="/">Perfil</Navlink> */}
                 </nav>
             </footer>
         </div>
