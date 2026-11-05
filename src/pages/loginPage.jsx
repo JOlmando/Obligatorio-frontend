@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { loginSchema } from '../../validators/auth.validators'
 import { toast } from 'react-toastify'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import api from "../api/api";
 import { guardarToken } from '../features/login.slice';
 
@@ -14,13 +14,12 @@ const Login = () => {
     const navigate = useNavigate()
     const usernameId = useId();
     const passwordId = useId();
-    const { handleSubmit, register, formState: { errors } } = useForm({resolver: joiResolver(loginSchema), mode: 'onChange'});
+    const { handleSubmit, register, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({resolver: joiResolver(loginSchema), mode: 'onChange'});
     const [errorLogin, setErrorLogin] = useState('');
-    const token = useSelector((state) => state.login.token);
 
     const iniciarSesion = async (data) => {
         try{
-          const res = await api.post('/v1/auth/login', data)
+          const res = await api.post('/auth/login', data)
 
           dispatch(guardarToken(res.data.token));
           toast.success("Inicio de sesión exitoso!");
@@ -49,9 +48,9 @@ const Login = () => {
                 <input type="password" id={passwordId} {...register('password')} required/>
                 {errors.password && <span className="error">{errors.password.message}</span>}
           </div>
-          <input type="submit" value="Iniciar sesión" />
+          <button type="submit" disabled={!isValid || isSubmitting}> {isSubmitting ? <i className="fas fa-spinner fa-spin" /> : 'Iniciar sesión'}</button>
       </form>
-      {errorLogin && <p role="alert">{errorLogin}</p>}
+      {errorLogin && <p role="alert">{errorLogin}</p>} 
       <p>
         ¿No tenés una cuenta? <Link to="/registro">Registrate</Link>
       </p>

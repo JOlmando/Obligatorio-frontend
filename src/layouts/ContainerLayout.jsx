@@ -1,9 +1,12 @@
 import { Outlet } from "react-router";
+import { Logout } from "../components/Logout";
 
 function ContainerLayout() {
+
     return (
         <div className="container-layout">
             <header className="container-header">
+                <Logout />
             </header>
             <main className="container-main">
                 <Outlet />
