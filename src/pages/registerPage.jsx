@@ -2,7 +2,7 @@ import { useId, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
-import { registerSchema } from '../../validators/auth.validators'
+import { registerSchema } from '../validators/auth.validators'
 import { useDispatch } from 'react-redux';
 import api from "../api/api";
 import { guardarToken } from '../features/login.slice';
@@ -28,7 +28,6 @@ const Register = () => {
         if (archivo) {
           formData.append('imagen', archivo);
         }
-        
         try{
           const res = await api.post('/auth/register', formData)
           dispatch(guardarToken(res.data.token));

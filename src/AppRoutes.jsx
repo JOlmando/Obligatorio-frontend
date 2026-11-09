@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import CheckinPage from "./pages/CheckinPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
+
 function AppRoutes() {
   return (
     <Routes>
@@ -20,8 +21,11 @@ function AppRoutes() {
         <Route element={<ContainerLayout/>}>
 
           <Route path="/checkin" element={<CheckinPage />} />
-        {/* </Route> */}
-      </Route>
+
+          <Route path="/checkin" element={<CheckinPage />} />
+
+        </Route>
+      {/* </Route> */}
 
 
       <Route path="*" element={<NotFoundPage />} />

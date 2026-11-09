@@ -1,32 +1,62 @@
 import { useEffect, useState } from "react";
 import api from "../../api/api";
 import Categoria from "./Categoria";
-import { useDispatch } from 'react-redux';
+import CategoriaSala from "./categoriaSala";
+import { useDispatch, useSelector } from 'react-redux';
 import { guardarCategorias } from '../../features/categorias.slice';
 
 const ListaCategorias = () => {
-
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const [categorias, setCategorias] = useState([]);
+  //const [categorias, setCategorias] = useState([]);
 
-    useEffect(() => {
-      api.get('/categorias?limit=10&page=1')
-          .then((res) => {
-              setCategorias(res.data.results);
-              console.log("Categorias: " +res.data.results);
-          })
-    }, []);
+  useEffect(() => {
+    const cargarCategorias = async () => {
+      try {
+        const res = await api.get("/categorias?limit=10&page=1");
+        if (!Array.isArray(res.data?.categorias)) {
+          throw new Error("La respuesta de categorías no tiene el formato esperado.");
+        }
+        // setCategorias(res.data.categorias);
+        // dispatch(guardarCategorias(categorias))
+        dispatch(guardarCategorias(res.data.categorias))
 
-    console.log("Categorias: " + categorias);
+      } catch (error) {
+        setError(
+          error.response?.data?.message ??
+            error.message ??
+            "No se pudieron cargar las categorías."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+    cargarCategorias();
+    
+  }, []);
 
-    dispatch(guardarCategorias(categorias));
+  const categorias = useSelector((state) => state.categorias.categorias);
+
+  const categoriasCard = categorias.filter((categoria) => categoria.nombre !== "Sala de musculación");
+
+  const salaMusculacion = categorias.find((categoria) => categoria.nombre === "Sala de musculación");
 
   return (
     <div className="lista-categorias">
-        {loading ? <p>Cargando categorías...</p> : (categorias.length > 0 ? categorias.map((c) => (<Categoria key={c._id} {...c} />)) : <p>No hay categorías disponibles.</p>)} 
+      { 
+        loading ? ( <p>Cargando categorías...</p> ) : 
+        error ? ( <p role="alert">{error}</p> ) : 
+        (categorias.length > 0) ? 
+          <>
+          {salaMusculacion && <CategoriaSala key={salaMusculacion._id} categoria={salaMusculacion} />}
+          {categoriasCard.map((categoria) => (<Categoria key={categoria._id} categoria={categoria} />))}
+          </>
+          : 
+          <p>No hay categorías disponibles.</p>
+      }
     </div>
   )
-  }
+};
 
-  export default ListaCategorias
+export default ListaCategorias;
