@@ -6,7 +6,7 @@ import { loginSchema } from '../validators/auth.validators'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux';
 import api from "../api/api";
-import { guardarToken } from '../features/login.slice';
+import { guardarToken } from '../features/auth.slice';
 
 const Login = () => {
 

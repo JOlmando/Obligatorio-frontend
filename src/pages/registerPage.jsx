@@ -5,7 +5,7 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { registerSchema } from '../validators/auth.validators'
 import { useDispatch } from 'react-redux';
 import api from "../api/api";
-import { guardarToken } from '../features/login.slice';
+import { guardarToken } from '../features/auth.slice';
 import { toast } from 'react-toastify'
 
 const Register = () => {

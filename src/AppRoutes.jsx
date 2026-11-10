@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CheckinPage from "./pages/CheckinPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import { Logout } from "./components/Logout";
 
 
 function AppRoutes() {
@@ -22,7 +23,7 @@ function AppRoutes() {
 
           <Route path="/checkin" element={<CheckinPage />} />
 
-          <Route path="/checkin" element={<CheckinPage />} />
+          <Route path="/logout" element={<Logout />} />
 
         </Route>
       {/* </Route> */}

@@ -1,0 +1,226 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import {
+    obtenerVisitasAPI,   
+    crearVisitaAPI,
+    actualizarVisitaAPI,
+    eliminarVisitaAPI
+} from "../services/visita.services";
+
+
+// =====================================
+// 1. THUNKS
+// =====================================
+
+// GET
+export const cargarVisitas = createAsyncThunk(
+    "visitas/cargar",
+    async (_, { rejectWithValue }) => {
+        try {
+            return await obtenerVisitasAPI();
+        } catch (error) {
+            return rejectWithValue(
+                error.response?.data?.message ??
+                error.message ??
+                "Error al cargar visitas"
+            );
+        }
+    }
+);
+
+// POST
+export const crearVisita = createAsyncThunk(
+    "visitas/crear",
+    async (datos, { rejectWithValue }) => {
+        try {
+            return await crearVisitaAPI(datos);
+        } catch (error) {
+            return rejectWithValue(
+                error.response?.data?.message ??
+                error.message ??
+                "Error al crear visita"
+            );
+        }
+    }
+);
+
+// PUT
+export const actualizarVisita = createAsyncThunk(
+    "visitas/actualizar",
+    async ({ id, datos }, { rejectWithValue }) => {
+        try {
+            return await actualizarVisitaAPI(id, datos);
+        } catch (error) {
+            return rejectWithValue(
+                error.response?.data?.message ??
+                error.message ??
+                "Error al actualizar visita"
+            );
+        }
+    }
+);
+
+// DELETE
+export const borrarVisita = createAsyncThunk(
+    "visitas/borrar",
+    async (id, { rejectWithValue }) => {
+        try {
+            return await eliminarVisitaAPI(id);
+        } catch (error) {
+            return rejectWithValue(
+                error.response?.data?.message ??
+                error.message ??
+                "Error al eliminar visita"
+            );
+        }
+    }
+);
+
+
+// =====================================
+// 2. ESTADO INICIAL
+// =====================================
+
+const initialState = {
+    visitas: [],
+
+    status: {
+        cargar: "idle",
+        crear: "idle",
+        actualizar: "idle",
+        borrar: "idle"
+    },
+
+    error: {
+        cargar: null,
+        crear: null,
+        actualizar: null,
+        borrar: null
+    }
+};
+
+
+// =====================================
+// 3. SLICE
+// =====================================
+
+const visitasSlice = createSlice({
+
+    name: "visitas",
+
+    initialState,
+
+    reducers: {
+
+        limpiarVisitas: () => initialState
+
+    },
+
+    extraReducers: (builder) => {
+
+        // =====================================
+        // CARGAR VISITAS - GET
+        // =====================================
+
+        builder
+
+            .addCase(cargarVisitas.pending, (state) => {
+                state.status.cargar = "loading";
+                state.error.cargar = null;
+            })
+
+            .addCase(cargarVisitas.fulfilled, (state, action) => {
+                state.status.cargar = "succeeded";
+                state.visitas = action.payload;
+            })
+
+            .addCase(cargarVisitas.rejected, (state, action) => {
+                state.status.cargar = "failed";
+                state.error.cargar =
+                    action.payload ?? action.error.message;
+            })
+
+
+        // =====================================
+        // CREAR VISITA - POST
+        // =====================================
+
+            .addCase(crearVisita.pending, (state) => {
+                state.status.crear = "loading";
+                state.error.crear = null;
+            })
+
+            .addCase(crearVisita.fulfilled, (state, action) => {
+                state.status.crear = "succeeded";
+                state.visitas.push(action.payload);
+            })
+
+            .addCase(crearVisita.rejected, (state, action) => {
+                state.status.crear = "failed";
+                state.error.crear =
+                    action.payload ?? action.error.message;
+            })
+
+
+        // =====================================
+        // ACTUALIZAR VISITA - PUT
+        // =====================================
+
+            .addCase(actualizarVisita.pending, (state) => {
+                state.status.actualizar = "loading";
+                state.error.actualizar = null;
+            })
+
+            .addCase(actualizarVisita.fulfilled, (state, action) => {
+                state.status.actualizar = "succeeded";
+
+                const index = state.visitas.findIndex(
+                    visita => visita._id === action.payload._id
+                );
+
+                if (index !== -1) {
+                    state.visitas[index] = action.payload;
+                }
+            })
+
+            .addCase(actualizarVisita.rejected, (state, action) => {
+                state.status.actualizar = "failed";
+                state.error.actualizar =
+                    action.payload ?? action.error.message;
+            })
+
+
+        // =====================================
+        // ELIMINAR VISITA - DELETE
+        // =====================================
+
+            .addCase(borrarVisita.pending, (state) => {
+                state.status.borrar = "loading";
+                state.error.borrar = null;
+            })
+
+            .addCase(borrarVisita.fulfilled, (state, action) => {
+                state.status.borrar = "succeeded";
+
+                state.visitas = state.visitas.filter(
+                    visita => visita._id !== action.payload
+                );
+            })
+
+            .addCase(borrarVisita.rejected, (state, action) => {
+                state.status.borrar = "failed";
+                state.error.borrar =
+                    action.payload ?? action.error.message;
+            });
+
+    }
+});
+
+
+// =====================================
+// 4. EXPORTACIONES
+// =====================================
+
+export const { limpiarVisitas } = visitasSlice.actions;
+
+export default visitasSlice.reducer;

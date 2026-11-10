@@ -2,7 +2,7 @@
 const Categoria = ({categoria}) => {
 
   const reservarCategoria = () => {
-        console.log("A");
+        console.log("Reserva realizada para la categoría:", categoria.nombre);
   }
 
   return (
