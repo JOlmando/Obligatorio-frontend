@@ -1,8 +1,10 @@
+import ReservarActividad from "../visita/ReservarActividad";
 
 const CategoriaSala = ({categoria}) => {
 
   const checkinSala = async () => {
     console.log("Check-in realizado para la categoría:", categoria.nombre);
+    ReservarActividad(categoria);
   }
 
   return (

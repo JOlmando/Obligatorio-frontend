@@ -63,7 +63,6 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { cargarCategorias } from "../../features/categorias.slice";
 
 import Categoria from "./Categoria";

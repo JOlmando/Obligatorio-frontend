@@ -1,8 +1,10 @@
+import ReservarActividad from "../visita/ReservarActividad";
 
 const Categoria = ({categoria}) => {
 
   const reservarCategoria = () => {
-        console.log("Reserva realizada para la categoría:", categoria.nombre);
+      console.log("Reserva realizada para la categoría:", categoria.nombre);
+      ReservarActividad(categoria);
   }
 
   return (
