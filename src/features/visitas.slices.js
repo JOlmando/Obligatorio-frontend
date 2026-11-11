@@ -7,17 +7,12 @@ import {
     eliminarVisitaAPI
 } from "../services/visita.services";
 
-
-// =====================================
-// 1. THUNKS
-// =====================================
-
 // GET
 export const cargarVisitas = createAsyncThunk(
     "visitas/cargar",
-    async (_, { rejectWithValue }) => {
+    async (filtros, { rejectWithValue }) => {
         try {
-            return await obtenerVisitasAPI();
+            return await obtenerVisitasAPI(filtros);
         } catch (error) {
             return rejectWithValue(
                 error.response?.data?.message ??
@@ -76,11 +71,6 @@ export const borrarVisita = createAsyncThunk(
     }
 );
 
-
-// =====================================
-// 2. ESTADO INICIAL
-// =====================================
-
 const initialState = {
     visitas: [],
 
@@ -100,10 +90,6 @@ const initialState = {
 };
 
 
-// =====================================
-// 3. SLICE
-// =====================================
-
 const visitasSlice = createSlice({
 
     name: "visitas",
@@ -117,11 +103,6 @@ const visitasSlice = createSlice({
     },
 
     extraReducers: (builder) => {
-
-        // =====================================
-        // CARGAR VISITAS - GET
-        // =====================================
-
         builder
 
             .addCase(cargarVisitas.pending, (state) => {
@@ -140,11 +121,6 @@ const visitasSlice = createSlice({
                     action.payload ?? action.error.message;
             })
 
-
-        // =====================================
-        // CREAR VISITA - POST
-        // =====================================
-
             .addCase(crearVisita.pending, (state) => {
                 state.status.crear = "loading";
                 state.error.crear = null;
@@ -161,10 +137,6 @@ const visitasSlice = createSlice({
                     action.payload ?? action.error.message;
             })
 
-
-        // =====================================
-        // ACTUALIZAR VISITA - PUT
-        // =====================================
 
             .addCase(actualizarVisita.pending, (state) => {
                 state.status.actualizar = "loading";
@@ -190,10 +162,6 @@ const visitasSlice = createSlice({
             })
 
 
-        // =====================================
-        // ELIMINAR VISITA - DELETE
-        // =====================================
-
             .addCase(borrarVisita.pending, (state) => {
                 state.status.borrar = "loading";
                 state.error.borrar = null;
@@ -216,10 +184,6 @@ const visitasSlice = createSlice({
     }
 });
 
-
-// =====================================
-// 4. EXPORTACIONES
-// =====================================
 
 export const { limpiarVisitas } = visitasSlice.actions;
 

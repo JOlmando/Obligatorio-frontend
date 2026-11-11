@@ -5,6 +5,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CheckinPage from "./pages/CheckinPage";
+import VisitasPage from "./pages/VisitasPage"
 import NotFoundPage from "./pages/NotFoundPage";
 import { Logout } from "./components/Logout";
 
@@ -17,17 +18,16 @@ function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
       </Route>
-{/* 
-      <Route element={<ProtectedRoute />}> */}
-        <Route element={<ContainerLayout/>}>
 
-          <Route path="/checkin" element={<CheckinPage />} />
+      <Route element={<ProtectedRoute />}> 
+          <Route element={<ContainerLayout/>}>
+            <Route path="/checkin" element={<CheckinPage />} />
+            
+            <Route path="/visitas" element={<VisitasPage />} />
 
-          <Route path="/logout" element={<Logout />} />
-
-        </Route>
-      {/* </Route> */}
-
+            <Route path="/logout" element={<Logout />} />
+          </Route>
+       </Route> 
 
       <Route path="*" element={<NotFoundPage />} />
       

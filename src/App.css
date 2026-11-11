@@ -182,3 +182,165 @@
     border-right-color: var(--border);
   }
 }
+
+.visitas-page {
+  width: min(100% - 32px, 760px);
+  margin: 0 auto;
+  padding: 24px 0 40px;
+}
+
+.visitas-page h1 {
+  margin-top: 8px;
+}
+
+.lista-visitas {
+  display: grid;
+  gap: 16px;
+  text-align: left;
+}
+
+.visita-card {
+  position: relative;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.visita-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.visita-card h2 {
+  margin-bottom: 8px;
+}
+
+.visita-card-fecha {
+  color: var(--text-h);
+}
+
+.visita-card-hora {
+  margin-top: 4px;
+}
+
+.visita-menu {
+  position: relative;
+}
+
+.visita-menu-toggle {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.visita-menu-toggle span {
+  width: 17px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text-h);
+}
+
+.visita-menu-opciones {
+  position: absolute;
+  z-index: 1;
+  top: 44px;
+  right: 0;
+  display: grid;
+  min-width: 140px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.visita-menu-opciones button {
+  padding: 10px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--text-h);
+  text-align: left;
+  cursor: pointer;
+}
+
+.visita-menu-opciones button:hover,
+.visita-menu-opciones button:focus-visible {
+  background: var(--accent-bg);
+}
+
+.visita-menu-opciones .visita-menu-eliminar {
+  color: #c62828;
+}
+
+.visita-edicion {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.visita-edicion label {
+  display: grid;
+  gap: 6px;
+}
+
+.visita-edicion input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-h);
+  background: var(--bg);
+  font: inherit;
+}
+
+.visita-edicion-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.visita-edicion-acciones button {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-h);
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.visita-edicion-acciones button[type="submit"] {
+  border-color: var(--accent);
+  color: white;
+  background: var(--accent);
+}
+
+.visita-menu button:disabled,
+.visita-edicion button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+  .visitas-page {
+    width: min(100% - 24px, 760px);
+    padding-top: 12px;
+  }
+
+  .visita-card {
+    padding: 16px;
+  }
+}
