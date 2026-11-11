@@ -14,7 +14,7 @@ const Login = () => {
     const navigate = useNavigate()
     const usernameId = useId();
     const passwordId = useId();
-    const { handleSubmit, register, formState: { errors, isSubmitting, isValid, isDirty } } = useForm({resolver: joiResolver(loginSchema), mode: 'onChange'});
+    const { handleSubmit, register, formState: { errors, isSubmitting, isValid } } = useForm({resolver: joiResolver(loginSchema), mode: 'onChange'});
     const [errorLogin, setErrorLogin] = useState('');
 
     const iniciarSesion = async (data) => {

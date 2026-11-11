@@ -36,7 +36,7 @@ export const crearVisita = createAsyncThunk(
             return await crearVisitaAPI(datos);
         } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message ??
+                error.response?.data ??
                 error.message ??
                 "Error al crear visita"
             );
