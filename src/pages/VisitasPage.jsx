@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cargarCategorias } from "../features/categorias.slice";
-import { cargarVisitas } from "../features/visitas.slices";
+import {
+    cargarVisitas,
+    cargarVisitasEntreFechas
+} from "../features/visitas.slices";
 import ListaVisitas from "../components/visita/ListaVisitas";
 
 const VisitasPage = () => {
@@ -21,13 +24,18 @@ const VisitasPage = () => {
     } = useSelector((state) => state.categorias);
 
     useEffect(() => {
+        const filtros = {
+            page: pagina,
+            limit: 7,
+            fechaInicio: filtroFechas.min || undefined,
+            fechaFin: filtroFechas.max || undefined
+        };
+        const tieneFiltroFechas = filtroFechas.min || filtroFechas.max;
+
         dispatch(
-            cargarVisitas({
-                page: pagina,
-                limit: 7,
-                min: filtroFechas.min || undefined,
-                max: filtroFechas.max || undefined
-            })
+            tieneFiltroFechas
+                ? cargarVisitasEntreFechas(filtros)
+                : cargarVisitas({ page: pagina, limit: 7 })
         );
     }, [dispatch, pagina, filtroFechas]);
 

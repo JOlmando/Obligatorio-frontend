@@ -5,8 +5,9 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { registerSchema } from '../validators/auth.validators'
 import { useDispatch } from 'react-redux';
 import api from "../api/api";
-import { guardarToken } from '../features/auth.slice';
+import { guardarToken, guardarNombre } from '../features/auth.slice';
 import { toast } from 'react-toastify'
+import { setImagen } from '../features/uploads/uploads.slice'
 
 const Register = () => {
 
@@ -30,10 +31,14 @@ const Register = () => {
         }
         try{
           const res = await api.post('/auth/register', formData)
+
           dispatch(guardarToken(res.data.token));
+          dispatch(guardarNombre(res.data.usuario.username));
+          dispatch(setImagen(res.data.usuario.fotoPerfil));
+
           toast.success("Inicio de sesión exitoso!");
           toast("Bienvenida/o!");
-          navigate('/checkin')
+          navigate('/checkin');
 
         }catch(error){
           console.error('Falló la petición de registro:', error.response?.status, error.response?.data?.message || error.message);

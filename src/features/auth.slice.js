@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { token: null }; 
+const initialState = { token: null, nombre: null }; 
 
 const tokenSlice = createSlice({
     name: 'token',
@@ -9,10 +9,15 @@ const tokenSlice = createSlice({
         guardarToken: (state, action) => {
             state.token = action.payload;
         },
+
+        guardarNombre: (state, action) => {
+            state.nombre = action.payload;
+        },
+
         limpiarToken: () => initialState
     }  
 });
 
 
-export const { guardarToken, limpiarToken } = tokenSlice.actions;
+export const { guardarToken, guardarNombre, limpiarToken } = tokenSlice.actions;
 export default tokenSlice.reducer;

@@ -1,24 +1,26 @@
 import api from "../api/api";
 
-// GET: obtener visitas paginadas y, opcionalmente, filtradas por fechas
+const validarRespuestaVisitas = (res) => {
+    const visitas = Array.isArray(res.data)
+        ? res.data
+        : res.data?.visitas;
+
+    if (!Array.isArray(visitas)) {
+        throw new Error("Formato de visitas inválido");
+    }
+    console.log(visitas)
+    return visitas;
+};
+
+// GET: obtener visitas paginadas
 export const obtenerVisitasAPI = async ({
     limit = 7,
-    page = 1,
-    min,
-    max
+    page = 1
 } = {}) => {
     const params = { limit, page };
 
-    if (min) params.min = min;
-    if (max) params.max = max;
-
     const res = await api.get("/visitas", { params });
-
-    if (!Array.isArray(res.data?.visitas)) {
-        throw new Error("Formato de visitas inválido");
-    }
-
-    return res.data.visitas;
+    return validarRespuestaVisitas(res);
 };
 
 // POST: crear visitas
@@ -42,14 +44,13 @@ export const eliminarVisitaAPI = async (id) => {
 // GET: obtener visitas entre fechas
 export const obtenerVisitasEntreFechasAPI = async (
     fechaInicio,
-    fechaFin,
-    limit = 7,
-    page = 1
+    fechaFin
 ) => {
-    return obtenerVisitasAPI({
-        limit,
-        page,
-        min: fechaInicio,
-        max: fechaFin
+    const res = await api.get("/visitas/fechas", {
+        params: {
+            min: fechaInicio,
+            max: fechaFin
+        }
     });
+    return validarRespuestaVisitas(res);
 };

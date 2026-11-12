@@ -4,15 +4,37 @@ import {
     obtenerVisitasAPI,   
     crearVisitaAPI,
     actualizarVisitaAPI,
-    eliminarVisitaAPI
+    eliminarVisitaAPI,
+    obtenerVisitasEntreFechasAPI
 } from "../services/visita.services";
 
 // GET
 export const cargarVisitas = createAsyncThunk(
     "visitas/cargar",
-    async (filtros, { rejectWithValue }) => {
+    async ({ limit = 7, page = 1 } = {}, { rejectWithValue }) => {
         try {
-            return await obtenerVisitasAPI(filtros);
+            return await obtenerVisitasAPI({ limit, page });
+        } catch (error) {
+            return rejectWithValue(
+                error.response?.data?.message ??
+                error.message ??
+                "Error al cargar visitas"
+            );
+        }
+    }
+);
+
+export const cargarVisitasEntreFechas = createAsyncThunk(
+    "visitas/cargarEntreFechas",
+    async (
+        { fechaInicio, fechaFin} = {},
+        { rejectWithValue }
+    ) => {
+        try {
+            return await obtenerVisitasEntreFechasAPI(
+                fechaInicio,
+                fechaFin
+            );
         } catch (error) {
             return rejectWithValue(
                 error.response?.data?.message ??
@@ -116,6 +138,22 @@ const visitasSlice = createSlice({
             })
 
             .addCase(cargarVisitas.rejected, (state, action) => {
+                state.status.cargar = "failed";
+                state.error.cargar =
+                    action.payload ?? action.error.message;
+            })
+
+            .addCase(cargarVisitasEntreFechas.pending, (state) => {
+                state.status.cargar = "loading";
+                state.error.cargar = null;
+            })
+
+            .addCase(cargarVisitasEntreFechas.fulfilled, (state, action) => {
+                state.status.cargar = "succeeded";
+                state.visitas = action.payload;
+            })
+
+            .addCase(cargarVisitasEntreFechas.rejected, (state, action) => {
                 state.status.cargar = "failed";
                 state.error.cargar =
                     action.payload ?? action.error.message;
