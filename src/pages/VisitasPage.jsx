@@ -6,8 +6,10 @@ import {
     cargarVisitasEntreFechas
 } from "../features/visitas.slices";
 import ListaVisitas from "../components/visita/ListaVisitas";
+import { useNavigate } from "react-router";
 
 const VisitasPage = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [pagina, setPagina] = useState(1);
     const [fechaInicio, setFechaInicio] = useState("");
@@ -17,6 +19,7 @@ const VisitasPage = () => {
     const { visitas, status: estadoVisitas, error: errorVisitas } = useSelector(
         (state) => state.visitas
     );
+
     const {
         categorias,
         status: estadoCategorias,
@@ -30,6 +33,7 @@ const VisitasPage = () => {
             fechaInicio: filtroFechas.min || undefined,
             fechaFin: filtroFechas.max || undefined
         };
+
         const tieneFiltroFechas = filtroFechas.min || filtroFechas.max;
 
         dispatch(
@@ -84,16 +88,14 @@ const VisitasPage = () => {
         <div className="visitas-page">
             <h1>Mis visitas</h1>
             <form onSubmit={aplicarFiltro}>
-                <label>
-                    Desde
+                <label>Desde
                     <input
                         type="date"
                         value={fechaInicio}
                         onChange={(event) => setFechaInicio(event.target.value)}
                     />
                 </label>
-                <label>
-                    Hasta
+                <label>Hasta
                     <input
                         type="date"
                         value={fechaFin}
@@ -103,6 +105,9 @@ const VisitasPage = () => {
                 <button type="submit">Filtrar</button>
                 <button type="button" onClick={limpiarFiltro}>
                     Limpiar
+                </button>
+                <button type="button" onClick={() => navigate("/stats")}>
+                    Stats
                 </button>
                 {errorFiltro && <p role="alert">{errorFiltro}</p>}
             </form>

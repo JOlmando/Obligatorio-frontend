@@ -7,7 +7,7 @@ const uploadsSlice = createSlice({
   },
   reducers: {
     setImagen: (state, action) => {
-      state.url = action.payload.url
+      state.url = action.payload?.url ?? action.payload ?? ""
     },
     resetImagen: (state) => {
       state.url = ""

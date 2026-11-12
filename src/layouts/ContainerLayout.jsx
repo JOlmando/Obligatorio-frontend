@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router";
-import { Logout } from "../components/Logout";
+import Logout from "../components/Logout";
 
 function ContainerLayout() {
 
@@ -16,8 +16,8 @@ function ContainerLayout() {
                     <NavLink to="/checkin">Inicio</NavLink> 
                     <NavLink to="/visitas">Visitas</NavLink>
                     {/* <NavLink to="/rutinas">Entrenamiento</NavLink>
-                    <NavLink to="/calorias">Calculadora</NavLink>
-                    <NavLink to="/perfil">Perfil</NavLink> */}
+                    <NavLink to="/calorias">Calculadora</NavLink>*/}
+                    <NavLink to="/perfil">Perfil</NavLink> 
                 </nav>
             </footer>
         </div>

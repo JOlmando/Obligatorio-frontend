@@ -8,7 +8,6 @@ const esSalaDeMusculacion = (categoria) =>
 
 const Visita = ({ visita, categoria }) => {
     const dispatch = useDispatch();
-    const [menuAbierto, setMenuAbierto] = useState(false);
     const [editando, setEditando] = useState(false);
     const [fecha, setFecha] = useState(visita.fecha ?? "");
     const [hora, setHora] = useState(
@@ -17,6 +16,11 @@ const Visita = ({ visita, categoria }) => {
     const { actualizar, borrar } = useSelector((state) => state.visitas.status);
     const esOperacion = actualizar === "loading" || borrar === "loading";
     const permiteAcciones = Boolean(categoria) && !esSalaDeMusculacion(categoria);
+    const horarios = categoria?.horarios
+        ? categoria.horarios.split(";").map((horario) => horario.trim()).filter(Boolean)
+        : [];
+    const horariosEdicion =
+        hora && !horarios.includes(hora) ? [hora, ...horarios] : horarios;
 
     const guardarCambios = async (event) => {
         event.preventDefault();
@@ -59,11 +63,14 @@ const Visita = ({ visita, categoria }) => {
         }
     };
 
-    const fechaVisible = visita.fecha
-        ? new Intl.DateTimeFormat("es-UY", { dateStyle: "long" }).format(
-              new Date(`${visita.fecha}T00:00:00`)
-          )
-        : "Fecha no disponible";
+    const fechaTexto =
+        typeof visita.fecha === "string" ? visita.fecha.slice(0, 10) : "";
+    const fechaDate = new Date(`${fechaTexto}T00:00:00`);
+    const fechaVisible = Number.isNaN(fechaDate.getTime())
+        ? "Fecha no disponible"
+        : new Intl.DateTimeFormat("es-UY", { dateStyle: "long" }).format(
+              fechaDate
+          );
 
     return (
         <article className="visita-card">
@@ -76,42 +83,22 @@ const Visita = ({ visita, categoria }) => {
                     )}
                 </div>
                 {permiteAcciones && (
-                    <div className="visita-menu">
+                    <div className="visita-acciones">
                         <button
                             type="button"
-                            className="visita-menu-toggle"
-                            aria-label="Abrir opciones de la visita"
-                            aria-expanded={menuAbierto}
-                            onClick={() => setMenuAbierto((abierto) => !abierto)}
+                            onClick={() => setEditando(true)}
+                            disabled={esOperacion || editando}
                         >
-                            <span />
-                            <span />
-                            <span />
+                            Modificar
                         </button>
-                        {menuAbierto && (
-                            <div className="visita-menu-opciones">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setEditando(true);
-                                        setMenuAbierto(false);
-                                    }}
-                                >
-                                    Modificar
-                                </button>
-                                <button
-                                    type="button"
-                                    className="visita-menu-eliminar"
-                                    disabled={esOperacion}
-                                    onClick={() => {
-                                        setMenuAbierto(false);
-                                        eliminar();
-                                    }}
-                                >
-                                    Eliminar
-                                </button>
-                            </div>
-                        )}
+                        <button
+                            type="button"
+                            className="visita-accion-eliminar"
+                            disabled={esOperacion}
+                            onClick={eliminar}
+                        >
+                            Eliminar
+                        </button>
                     </div>
                 )}
             </div>
@@ -129,12 +116,17 @@ const Visita = ({ visita, categoria }) => {
                     </label>
                     <label>
                         Hora
-                        <input
-                            type="time"
+                        <select
                             value={hora}
                             onChange={(event) => setHora(event.target.value)}
                             required
-                        />
+                        >
+                            {horariosEdicion.map((horario) => (
+                                <option key={horario} value={horario}>
+                                    {horario}
+                                </option>
+                            ))}
+                        </select>
                     </label>
                     <div className="visita-edicion-acciones">
                         <button

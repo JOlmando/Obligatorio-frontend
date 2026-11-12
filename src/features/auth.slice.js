@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { token: null, nombre: null }; 
+const initialState = { token: null, usuario: null }; 
 
 const tokenSlice = createSlice({
     name: 'token',
@@ -10,8 +10,8 @@ const tokenSlice = createSlice({
             state.token = action.payload;
         },
 
-        guardarNombre: (state, action) => {
-            state.nombre = action.payload;
+        guardarUsuario: (state, action) => {
+            state.usuario = action.payload;
         },
 
         limpiarToken: () => initialState
@@ -19,5 +19,5 @@ const tokenSlice = createSlice({
 });
 
 
-export const { guardarToken, guardarNombre, limpiarToken } = tokenSlice.actions;
+export const { guardarToken, guardarUsuario, limpiarToken } = tokenSlice.actions;
 export default tokenSlice.reducer;

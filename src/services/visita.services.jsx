@@ -13,11 +13,19 @@ const validarRespuestaVisitas = (res) => {
 };
 
 // GET: obtener visitas paginadas
-export const obtenerVisitasAPI = async ({
-    limit = 7,
-    page = 1
-} = {}) => {
-    const params = { limit, page };
+// export const obtenerVisitasAPI = async ({
+//     limit = 7,
+//     page = 1
+// } = {}) => {
+//     const params = { limit, page };
+
+//     const res = await api.get("/visitas", { params });
+//     return validarRespuestaVisitas(res);
+// };
+export const obtenerVisitasAPI = async ({ limit, page } = {}) => {
+    const params = {};
+    if (limit != null) params.limit = limit;
+    if (page != null) params.page = page;
 
     const res = await api.get("/visitas", { params });
     return validarRespuestaVisitas(res);

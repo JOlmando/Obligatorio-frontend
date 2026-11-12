@@ -1,6 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from "react";
-import { cargarVisitas } from "../../features/visitas.slices";
+import { useEffect, useState } from 'react'
+import { obtenerVisitasAPI } from '../../services/visita.services';
 
 import {
   Chart as ChartJS,
@@ -14,24 +13,30 @@ import {
 import { Bar } from 'react-chartjs-2';
 
 const StatsVisitas = () => {
+    const [visitas, setVisitas] = useState([]);
+    const [error, setError] = useState("");
 
-    const { visitas, status, error } = useSelector(
-        state => state.visitas
-    );
-
-    
-    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','set','oct','nov','dic']
-
-    function diasPorMes(){
-
-        for (const v of visitas) {
-            
+    useEffect(() => {
+      const cargarVisitas = async () => {
+        try {
+          setVisitas(await obtenerVisitasAPI());
+        } catch (error) {
+          setError(error.message || "No se pudieron cargar las visitas.");
         }
+      };
 
-        return
+      cargarVisitas();
+    }, []);
+
+    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','set','oct','nov','dic'];
+    const diasEnElMes = Array(12).fill(0);
+
+    for (const v of visitas) {
+      const mes = Number(v.fecha.slice(5, 7));
+      if (mes >= 1 && mes <= 12) {
+          diasEnElMes[mes - 1]++;
+      }
     }
-
-    const diasMeses = useSelector(state => state.forecast.maximas)
 
   ChartJS.register(
     CategoryScale,
@@ -44,6 +49,13 @@ const StatsVisitas = () => {
 
  const options = {
   responsive: true,
+  scales: {
+    y: {
+      ticks: {
+        stepSize: 1
+      }
+    }
+  },
   plugins: {
     legend: {
       position: 'top' ,
@@ -61,8 +73,8 @@ const labels = meses;
   labels,
   datasets: [
     {
-      label: 'diasMeses',
-      data: maximas,
+      label: 'Dias al mes',
+      data: diasEnElMes,
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
   ],
@@ -71,6 +83,7 @@ const labels = meses;
 
   return (
     <div>
+      {error && <p role="alert">{error}</p>}
       <Bar options={options} data={data} />
     </div>);
 }

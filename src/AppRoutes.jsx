@@ -7,7 +7,9 @@ import RegisterPage from "./pages/RegisterPage";
 import CheckinPage from "./pages/CheckinPage";
 import VisitasPage from "./pages/VisitasPage"
 import NotFoundPage from "./pages/NotFoundPage";
-import { Logout } from "./components/Logout";
+import StatsVisitas from "./components/visita/StatsVisitas";
+import PerfilPage from "./pages/PerfilPage";
+import Logout from "./components/Logout";
 
 
 function AppRoutes() {
@@ -22,9 +24,10 @@ function AppRoutes() {
       <Route element={<ProtectedRoute />}> 
           <Route element={<ContainerLayout/>}>
             <Route path="/checkin" element={<CheckinPage />} />
-            
             <Route path="/visitas" element={<VisitasPage />} />
-
+            <Route path="/stats" element={<StatsVisitas />} />
+            <Route path="/perfil" element={<PerfilPage />} />
+            
             <Route path="/logout" element={<Logout />} />
           </Route>
        </Route> 

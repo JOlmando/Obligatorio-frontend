@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { limpiarToken } from '../features/auth.slice'
 
-export const Logout = () => {
+const Logout = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -27,3 +27,5 @@ export const Logout = () => {
     </>
     )
 }
+
+export default Logout;

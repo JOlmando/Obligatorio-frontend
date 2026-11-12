@@ -6,7 +6,8 @@ import { loginSchema } from '../validators/auth.validators'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux';
 import api from "../api/api";
-import { guardarToken, guardarNombre } from '../features/auth.slice';
+import { guardarToken, guardarUsuario } from '../features/auth.slice';
+import { setImagen } from '../features/uploads/uploads.slice'
 
 const Login = () => {
 
@@ -21,9 +22,10 @@ const Login = () => {
         try{
           const res = await api.post('/auth/login', data)
           dispatch(guardarToken(res.data.token));
-          dispatch(guardarNombre(res.data.usuario));
+          dispatch(guardarUsuario(res.data.usuario));
+          dispatch(setImagen(res.data.usuario.fotoPerfil));
+
           toast.success("Inicio de sesión exitoso!");
-          toast("Bienvenida/o!");
           navigate('/checkin');
         }catch(error){
           setErrorLogin(error.response?.data?.message || 'Ocurrió un error al iniciar sesión');
