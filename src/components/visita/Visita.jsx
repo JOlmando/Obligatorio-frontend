@@ -111,6 +111,11 @@ const Visita = ({ visita, categoria }) => {
                             type="date"
                             value={fecha}
                             onChange={(event) => setFecha(event.target.value)}
+                            onClick={(event) => {
+                                if (typeof event.currentTarget.showPicker === "function") {
+                                    event.currentTarget.showPicker();
+                                }
+                            }}
                             required
                         />
                     </label>

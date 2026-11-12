@@ -26,33 +26,41 @@ const ListaCategorias = () => {
     );
 
     if (status.cargar === "loading") {
-        return <p>Cargando categorías...</p>;
+        return <p className="checkin-estado">Cargando categorías...</p>;
     }
 
     if (status.cargar === "failed") {
-        return <p role="alert">{error.cargar}</p>;
+        return <p className="checkin-estado" role="alert">{error.cargar}</p>;
     }
 
     if (categorias.length === 0) {
-        return <p>No hay categorías disponibles.</p>;
+        return <p className="checkin-estado">No hay categorías disponibles.</p>;
     }
 
     return (
-        <div className="lista-categorias">
-
+        <div className="checkin-content">
             {salaMusculacion && (
                 <CategoriaSala
                     categoria={salaMusculacion}
                 />
             )}
 
-            {categoriasCard.map(categoria => (
-                <Categoria
-                    key={categoria._id}
-                    categoria={categoria}
-                />
-            ))}
-
+            {categoriasCard.length > 0 && (
+                <section className="otras-actividades">
+                    <header className="otras-actividades-header">
+                        <h2>Otras categorías</h2>
+                        <p>Seleccioná la actividad que querés realizar y reservá tu horario.</p>
+                    </header>
+                    <div className="actividades-grid">
+                        {categoriasCard.map(categoria => (
+                            <Categoria
+                                key={categoria._id}
+                                categoria={categoria}
+                            />
+                        ))}
+                    </div>
+                </section>
+            )}
         </div>
     );
 };

@@ -10,6 +10,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import StatsVisitas from "./components/visita/StatsVisitas";
 import PerfilPage from "./pages/PerfilPage";
 import Logout from "./components/Logout";
+import RutinasPage from "./pages/RutinasPage"
 
 
 function AppRoutes() {
@@ -17,6 +18,7 @@ function AppRoutes() {
     <Routes>
 
       <Route element={<AuthLayout />}>
+        <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
       </Route>
@@ -25,6 +27,9 @@ function AppRoutes() {
           <Route element={<ContainerLayout/>}>
             <Route path="/checkin" element={<CheckinPage />} />
             <Route path="/visitas" element={<VisitasPage />} />
+
+            <Route path="/rutinas" element={<RutinasPage />} />
+            
             <Route path="/stats" element={<StatsVisitas />} />
             <Route path="/perfil" element={<PerfilPage />} />
             

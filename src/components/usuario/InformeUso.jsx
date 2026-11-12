@@ -11,7 +11,8 @@ const formatoFecha = (fecha) => {
 
 function InformeUso() {
     const usuario = useSelector((state) => state.auth.usuario);
-    const limite = usuario?.plan?.toLowerCase() === "premium" ? 7 : 4;
+    const esPremium = usuario?.plan?.toLowerCase() === "premium";
+    const limite = 4;
     const [visitasSemana, setVisitasSemana] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");
@@ -57,27 +58,34 @@ function InformeUso() {
             ) : error ? (
                 <p role="alert">{error}</p>
             ) : (
-                <>
+                esPremium ? (
                     <div className="informe-uso-resumen">
-                        <span>Visitas por semana</span>
-                        <strong>{cantidad} / {limite}</strong>
+                        <span>Visitas realizadas esta semana</span>
+                        <strong>{cantidad}</strong>
                     </div>
-                    <div
-                        className="informe-uso-progreso"
-                        role="progressbar"
-                        aria-label="Visitas realizadas esta semana"
-                        aria-valuemin="0"
-                        aria-valuemax={limite}
-                        aria-valuenow={Math.min(cantidad, limite)}
-                    >
-                        <span style={{ width: `${porcentaje}%` }} />
-                    </div>
-                    <p>
-                        {restantes > 0
-                            ? `Te quedan ${restantes} visitas esta semana`
-                            : "Llegaste al límite de visitas de esta semana"}
-                    </p>
-                </>
+                ) : (
+                    <>
+                        <div className="informe-uso-resumen">
+                            <span>Visitas por semana</span>
+                            <strong>{cantidad} / {limite}</strong>
+                        </div>
+                        <div
+                            className="informe-uso-progreso"
+                            role="progressbar"
+                            aria-label="Visitas realizadas esta semana"
+                            aria-valuemin="0"
+                            aria-valuemax={limite}
+                            aria-valuenow={Math.min(cantidad, limite)}
+                        >
+                            <span style={{ width: `${porcentaje}%` }} />
+                        </div>
+                        <p>
+                            {restantes > 0
+                                ? `Te quedan ${restantes} visitas esta semana`
+                                : "Llegaste al límite de visitas de esta semana"}
+                        </p>
+                    </>
+                )
             )}
         </section>
     );

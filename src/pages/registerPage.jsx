@@ -6,7 +6,6 @@ import { registerSchema } from '../validators/auth.validators'
 import { useDispatch } from 'react-redux';
 import api from "../api/api";
 import { guardarToken, guardarUsuario } from '../features/auth.slice';
-import { toast } from 'react-toastify'
 import { setImagen } from '../features/uploads/uploads.slice'
 
 const Register = () => {
@@ -35,8 +34,6 @@ const Register = () => {
           dispatch(guardarToken(res.data.token));
           dispatch(guardarUsuario(res.data.usuario));
           dispatch(setImagen(res.data.usuario.fotoPerfil));
-
-          toast.success("Registro exitoso!");
           navigate('/checkin');
 
         }catch(error){
@@ -46,42 +43,105 @@ const Register = () => {
     }
 
   return (
-    <>
     <section className="auth-form">
-      <h2>Registrarse</h2>
-      <p>Ingresá a tus datos para continuar</p>
+      <h2>Crear cuenta</h2>
+      <p>Completá los datos para registrarte</p>
       <form onSubmit={handleSubmit(Registrar)}>
-        
-        <div className="form-group">
-            <label htmlFor={usernameId}>Usuario:</label>
-            <input type="text" id={usernameId} {...register('username')} required />
-            {errors.username && <span className="error">{errors.username.message}</span>}
+        <div className="auth-form-group">
+          <label htmlFor={usernameId}>Usuario</label>
+          <div className="auth-input-shell">
+            <span className="auth-input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="3.5" />
+                <path d="M5 20v-1.5a7 7 0 0 1 14 0V20z" />
+              </svg>
+            </span>
+            <input
+              type="text"
+              id={usernameId}
+              placeholder="Ingresá tu usuario"
+              {...register('username')}
+              required
+            />
+          </div>
+          {errors.username && <span className="auth-field-error">{errors.username.message}</span>}
         </div>
 
-        <div className="form-group">
-            <label htmlFor={passwordId}>Contraseña:</label>
-            <input type="password" id={passwordId} {...register('password')} required/>
-            {errors.password && <span className="error">{errors.password.message}</span>}
+        <div className="auth-form-group">
+          <label htmlFor={passwordId}>Contraseña</label>
+          <div className="auth-input-shell">
+            <span className="auth-input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="10" width="14" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 1 1 8 0v3M12 14v3" />
+              </svg>
+            </span>
+            <input
+              type="password"
+              id={passwordId}
+              placeholder="Ingresá tu contraseña"
+              {...register('password')}
+              required
+            />
+          </div>
+          {errors.password && <span className="auth-field-error">{errors.password.message}</span>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor={passwordConfirmId}>Confirmá tu contraseña:</label>
-          <input type="password" id={passwordConfirmId} {...register("confirmPassword")} />
-          {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
+        <div className="auth-form-group">
+          <label htmlFor={passwordConfirmId}>Confirmar contraseña</label>
+          <div className="auth-input-shell">
+            <span className="auth-input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="10" width="14" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 1 1 8 0v3M12 14v3" />
+              </svg>
+            </span>
+            <input
+              type="password"
+              id={passwordConfirmId}
+              placeholder="Confirmá tu contraseña"
+              {...register("confirmPassword")}
+            />
+          </div>
+          {errors.confirmPassword && <span className="auth-field-error">{errors.confirmPassword.message}</span>}
         </div>
 
-        <label htmlFor="subir-img">Elige una foto de perfil:</label>
-        <input type="file" id="subir-img" accept="image/*" {...register("imagen")}></input>
-        
-        <button type="submit" disabled={!isValid || isSubmitting}> {isSubmitting ? <i className="fas fa-spinner fa-spin" /> : 'Registrarse'}</button>
+        <div className="auth-photo-group">
+          <span className="auth-photo-label">Foto de perfil (opcional)</span>
+          <div className="auth-photo-control">
+            <span className="auth-photo-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21a8 8 0 0 1 16 0z" />
+              </svg>
+            </span>
+            <label className="auth-file-button" htmlFor="subir-img">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 8h3l1.5-2h7L17 8h3v11H4z" />
+                <circle cx="12" cy="13" r="3.5" />
+              </svg>
+              Seleccionar imagen
+            </label>
+            <input
+              className="auth-file-input"
+              type="file"
+              id="subir-img"
+              accept="image/*"
+              {...register("imagen")}
+            />
+          </div>
+        </div>
+
+        <button className="auth-submit-button" type="submit" disabled={!isValid || isSubmitting}>
+          {isSubmitting ? <i className="fas fa-spinner fa-spin" /> : 'Registrarse'}
+        </button>
       </form>
-      {errorRegister && <p role="alert">{errorRegister}</p>}
-      <p>
-          ¿Ya tenés una cuenta? <Link to="/login">Iniciar sesión</Link>
+      {errorRegister && <p className="auth-api-error" role="alert">{errorRegister}</p>}
+      <div className="auth-divider" aria-hidden="true"><span>o</span></div>
+      <p className="auth-switch">
+        ¿Ya tenés una cuenta? <Link to="/login">Iniciar sesión</Link>
       </p>
-      
     </section>
-    </>
   )
 }
 

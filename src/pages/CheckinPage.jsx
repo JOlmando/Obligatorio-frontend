@@ -2,10 +2,9 @@ import ListaCategorias from "../components/categoria/ListaCategorias";
 
 function Checkin(){
     return(
-        <>
-            <h1>Aaaaaa</h1>
+        <section className="checkin-page" aria-label="Check-in y actividades">
             <ListaCategorias />
-        </>
+        </section>
     )
 }
 
