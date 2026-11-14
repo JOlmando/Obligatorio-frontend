@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router";
 import ContainerLayout from "./layouts/ContainerLayout"
 import ProtectedRoute from './guards/ProtectedRoute'
 import AuthLayout from "./layouts/AuthLayout";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/loginPage";
+import RegisterPage from "./pages/registerPage";
 import CheckinPage from "./pages/CheckinPage";
 import VisitasPage from "./pages/VisitasPage"
 import NotFoundPage from "./pages/NotFoundPage";
