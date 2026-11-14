@@ -40,6 +40,7 @@ export const crearVisitaAPI = async (datos) => {
 // PUT: actualizar visitas
 export const actualizarVisitaAPI = async (id, datos) => {
     const res = await api.put(`/visitas/${id}`, datos);
+    console.log(res.data);
     return res.data;
 };
 

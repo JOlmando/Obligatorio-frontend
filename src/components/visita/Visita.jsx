@@ -6,18 +6,29 @@ import { actualizarVisita, borrarVisita } from "../../features/visitas.slices";
 const esSalaDeMusculacion = (categoria) =>
     categoria?.nombre === "Sala de musculación";
 
+const patronHorario = /^([01]\d|2[0-3]):([0-5]\d)-([01]\d|2[0-3]):([0-5]\d)$/;
+
+const normalizarHorario = (horario) => {
+    if (typeof horario !== "string") {
+        return "";
+    }
+
+    const horarioNormalizado = horario.trim().replace(/\s*-\s*/g, "-");
+    return patronHorario.test(horarioNormalizado) ? horarioNormalizado : "";
+};
+
 const Visita = ({ visita, categoria }) => {
     const dispatch = useDispatch();
     const [editando, setEditando] = useState(false);
-    const [fecha, setFecha] = useState(visita.fecha ?? "");
-    const [hora, setHora] = useState(
-        /^\d{2}:\d{2}$/.test(visita.hora ?? "") ? visita.hora : ""
+    const [fecha, setFecha] = useState(() =>
+        typeof visita.fecha === "string" ? visita.fecha.slice(0, 10) : ""
     );
+    const [hora, setHora] = useState(() => normalizarHorario(visita.hora));
     const { actualizar, borrar } = useSelector((state) => state.visitas.status);
     const esOperacion = actualizar === "loading" || borrar === "loading";
     const permiteAcciones = Boolean(categoria) && !esSalaDeMusculacion(categoria);
     const horarios = categoria?.horarios
-        ? categoria.horarios.split(";").map((horario) => horario.trim()).filter(Boolean)
+        ? categoria.horarios.split(";").map(normalizarHorario).filter(Boolean)
         : [];
     const horariosEdicion =
         hora && !horarios.includes(hora) ? [hora, ...horarios] : horarios;
@@ -38,6 +49,7 @@ const Visita = ({ visita, categoria }) => {
             toast.success("Visita modificada correctamente");
             setEditando(false);
         } catch (error) {
+
             toast.error(
                 typeof error === "string"
                     ? error

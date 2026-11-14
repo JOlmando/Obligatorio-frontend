@@ -21,6 +21,7 @@ const ListaVisitas = ({ visitas, categorias }) => {
                         key={visita._id}
                         visita={visita}
                         categoria={categoria}
+                    
                     />
                 );
             })}

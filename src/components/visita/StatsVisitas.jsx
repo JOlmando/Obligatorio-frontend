@@ -62,7 +62,7 @@ const StatsVisitas = () => {
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: 'AÑO',
     },
   },
 };
