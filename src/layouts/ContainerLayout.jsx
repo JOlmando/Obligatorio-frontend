@@ -60,7 +60,7 @@ function ContainerLayout() {
                         <svg className="container-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M3 10v4M6 7v10M9 10v4M9 12h6M15 10v4M18 7v10M21 10v4" />
                         </svg>
-                        <span>Entrenamiento</span>
+                        <span>Entrenamientos</span>
                     </NavLink>
                     <NavLink to="/perfil">
                         <svg className="container-nav-icon" viewBox="0 0 24 24" aria-hidden="true">
