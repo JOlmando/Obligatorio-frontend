@@ -12,7 +12,6 @@ import PerfilPage from "./pages/PerfilPage";
 import Logout from "./components/Logout";
 import RutinasPage from "./pages/RutinasPage"
 
-
 function AppRoutes() {
   return (
     <Routes>
