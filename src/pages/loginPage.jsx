@@ -8,7 +8,7 @@ import api from "../api/api";
 import { guardarToken, guardarUsuario } from '../features/auth.slice';
 import { setImagen } from '../features/uploads/uploads.slice'
 
-const Login = () => {
+const LoginPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -86,4 +86,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginPage

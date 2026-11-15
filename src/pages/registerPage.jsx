@@ -8,7 +8,7 @@ import api from "../api/api";
 import { guardarToken, guardarUsuario } from '../features/auth.slice';
 import { setImagen } from '../features/uploads/uploads.slice'
 
-const Register = () => {
+const RegisterPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -145,4 +145,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default RegisterPage
