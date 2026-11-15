@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cargarCategorias } from "../../features/categorias.slice";
 
 import Categoria from "./Categoria";
-import CategoriaSala from "./CategoriaSala";
+import CategoriaSala from "./categoriaSala";
 
 const ListaCategorias = () => {
 
