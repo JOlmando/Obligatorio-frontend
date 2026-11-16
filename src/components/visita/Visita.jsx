@@ -26,12 +26,18 @@ const Visita = ({ visita, categoria }) => {
     const [hora, setHora] = useState(() => normalizarHorario(visita.hora));
     const { actualizar, borrar } = useSelector((state) => state.visitas.status);
     const esOperacion = actualizar === "loading" || borrar === "loading";
-    const permiteAcciones = Boolean(categoria) && !esSalaDeMusculacion(categoria);
+    const fechaTexto = typeof visita.fecha === "string" ? visita.fecha.slice(0, 10) : "";
+    const fechaDate = new Date(`${fechaTexto}T00:00:00`);
+    const fechaVisible = Number.isNaN(fechaDate.getTime()) ? "Fecha no disponible" : new Intl.DateTimeFormat("es-UY", { dateStyle: "long" }).format(fechaDate);
+    const hoy = new Date();
+    const permiteAcciones = Boolean(categoria) && !esSalaDeMusculacion(categoria) && hoy <= fechaDate;
     const horarios = categoria?.horarios
         ? categoria.horarios.split(";").map(normalizarHorario).filter(Boolean)
         : [];
     const horariosEdicion =
         hora && !horarios.includes(hora) ? [hora, ...horarios] : horarios;
+    
+    
 
     const guardarCambios = async (event) => {
         event.preventDefault();
@@ -75,14 +81,7 @@ const Visita = ({ visita, categoria }) => {
         }
     };
 
-    const fechaTexto =
-        typeof visita.fecha === "string" ? visita.fecha.slice(0, 10) : "";
-    const fechaDate = new Date(`${fechaTexto}T00:00:00`);
-    const fechaVisible = Number.isNaN(fechaDate.getTime())
-        ? "Fecha no disponible"
-        : new Intl.DateTimeFormat("es-UY", { dateStyle: "long" }).format(
-              fechaDate
-          );
+    
 
     return (
         <article className="visita-card">
